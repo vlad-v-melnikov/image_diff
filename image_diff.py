@@ -88,9 +88,18 @@ def clean_diffs(echo=True):
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-s', '--source', help="These files are the originals - they are correct")
-    parser.add_argument('-t', '--target', help="These files are target images - we are not sure if they are correct")
-    parser.add_argument('-x', '--exclude', help="A string for what these files names SHOULD NOT contain")
+    parser.add_argument('-s', '--source', help="These files are the originals - they are correct. "
+                                               "Use wildcard format without quotation marks to indicate them. "
+                                               "For example, *.gif is all files with gif extension in the current "
+                                               "directory")
+    parser.add_argument('-t', '--target', help="These files are target images - we are not sure if they are correct. "
+                                               "Use wildcard format without quotation marks to indicate them. "
+                                               "For example, *.gif is all files with gif extension in the current "
+                                               "directory")
+    parser.add_argument('-x', '--exclude', help="A string for what these files names SHOULD NOT contain. "
+                                                "No wildcards here. For example, _nc.gif means that files like "
+                                                "one_nc.gif will be ignored.")
+
     args = parser.parse_args()
     source_file_pattern = args.source if args.source else ".\\source\\*.*"
     target_file_pattern = args.target if args.target else ".\\target\\*.*"
