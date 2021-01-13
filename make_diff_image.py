@@ -32,8 +32,8 @@ def main():
         source_images = exclude_images(source_images, exclusion)
         test_images = exclude_images(test_images, exclusion)
 
-    print(f'{len(source_images)} benchmark images, {len(test_images)} target images.')
-    logging.info(f'{len(source_images)} benchmark images, {len(test_images)} target images.')
+    print(f'{len(source_images)} benchmark images, {len(test_images)} target image(s).')
+    logging.info(f'{len(source_images)} benchmark images, {len(test_images)} target image(s).')
     print()
 
     screens = zip(source_images, test_images)
