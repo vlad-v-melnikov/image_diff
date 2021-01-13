@@ -41,15 +41,15 @@ class TestImageDiff(unittest.TestCase):
 
     def test_make_diff_dir_no_dir(self):
         was_no_dir = True
-        if os.path.isdir("diff"):
+        if os.path.isdir("test"):
             was_no_dir = False
-            os.rmdir("diff")
-        make_diff_image.make_diff_dir(echo=False)
+            os.rmdir("test")
+        make_diff_image.make_dir('test', echo=False)
 
-        self.assertTrue(os.path.isdir("diff"))
+        self.assertTrue(os.path.isdir("test"))
 
         if was_no_dir:
-            os.rmdir("diff")
+            os.rmdir("test")
 
     def test_clean_diffs_with_files(self):
         was_no_dir = False

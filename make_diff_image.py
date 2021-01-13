@@ -10,12 +10,13 @@ def main():
     source_file_pattern, test_file_pattern, exclusion, log_deletion = parse_arguments()
 
     delete_logs(log_deletion)
-    make_diff_dir()
+    make_dir('diff')
+    make_dir('logs')
     clean_diffs()
 
     now = datetime.now()
     log_time = now.strftime("%Y%m%d%H%M%S")
-    logging.basicConfig(filename=f'log_image_diff_{log_time}.log',
+    logging.basicConfig(filename=f'./logs/log_image_diff_{log_time}.log',
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         level=logging.INFO)
 
@@ -33,6 +34,7 @@ def main():
 
     print(f'{len(source_images)} benchmark images, {len(test_images)} target images.')
     logging.info(f'{len(source_images)} benchmark images, {len(test_images)} target images.')
+    print()
 
     screens = zip(source_images, test_images)
     for source, target in screens:
@@ -68,18 +70,18 @@ def exclude_images(images, exclusion):
 def delete_logs(log_deletion, echo=True):
     if not log_deletion:
         return
-    files = glob("./log_image_diff_*.log")
+    files = glob("./logs/log_image_diff_*.log")
     for f in files:
         os.unlink(f)
     if len(files) and echo > 0:
         print(f"Deleted {len(files)} log file(s).")
 
 
-def make_diff_dir(echo=True):
-    if not os.path.exists("./diff"):
-        os.makedirs("./diff")
+def make_dir(folder, echo=True):
+    if not os.path.exists(f"./{folder}"):
+        os.makedirs(f"./{folder}")
         if echo:
-            print("Created diff folder.")
+            print(f"Created {folder} folder.")
 
 
 def clean_diffs(echo=True):
