@@ -20,8 +20,8 @@ def main():
                         level=logging.INFO)
 
     try:
-        source_images = get_image_list(source_file_pattern, 'source').sort()
-        test_images = get_image_list(test_file_pattern, 'target').sort()
+        source_images = get_image_list(source_file_pattern, 'source')
+        test_images = get_image_list(test_file_pattern, 'target')
     except AssertionError as e:
         print(e)
         logging.error(e)
@@ -53,10 +53,11 @@ def main():
 
 
 def get_image_list(file_pattern, purpose):
-    source_images = glob(file_pattern)
-    assert len(source_images) > 0, f"Could not find the {purpose} files. Use -h argument for help on how to " \
+    images = glob(file_pattern)
+    assert len(images) > 0, f"Could not find the {purpose} files. Use -h argument for help on how to " \
                                    f"point the script to {purpose} files. Exiting."
-    return source_images
+    images = images.sort()
+    return images
 
 
 def exclude_images(images, exclusion):
