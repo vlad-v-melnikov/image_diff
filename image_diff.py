@@ -20,12 +20,8 @@ def main():
                         level=logging.INFO)
 
     try:
-        source_images = glob(source_file_pattern)
-        assert len(source_images) > 0, "Could not find the source files. Use -h argument for help on how to " \
-                                       "point the script to source files. Exiting."
-        test_images = glob(test_file_pattern)
-        assert len(test_images) > 0, "Could not find the target files. Use -h argument for help on how to point " \
-                                     "the script to target files. Exiting."
+        source_images = get_image_list(source_file_pattern, 'source')
+        test_images = get_image_list(test_file_pattern, 'target')
     except AssertionError as e:
         print(e)
         logging.error(e)
@@ -56,16 +52,11 @@ def main():
             diff.save('diff/diff_' + identifier + '.gif')
 
 
-def get_image_list(file_pattern, purpose, echo=True):
-    try:
-        source_images = glob(file_pattern)
-        assert len(source_images) > 0, f"Could not find the {purpose} files. Exiting."
-        return source_images
-    except AssertionError as e:
-        if echo:
-            print(e)
-        logging.error(e)
-        raise e
+def get_image_list(file_pattern, purpose):
+    source_images = glob(file_pattern)
+    assert len(source_images) > 0, f"Could not find the {purpose} files. Use -h argument for help on how to " \
+                                   f"point the script to {purpose} files. Exiting."
+    return source_images
 
 
 def exclude_images(images, exclusion):

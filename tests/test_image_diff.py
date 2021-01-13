@@ -25,7 +25,7 @@ class TestImageDiff(unittest.TestCase):
             with open(name, 'w') as f:
                 f.write(f"name")
 
-        result = image_diff.get_image_list('*.gif', 'source', echo=False)
+        result = image_diff.get_image_list('*.gif', 'source')
 
         self.assertListEqual(self.files, result)
         for name in self.files:
@@ -37,7 +37,7 @@ class TestImageDiff(unittest.TestCase):
             if os.path.exists(name):
                 os.unlink(name)
         with self.assertRaises(AssertionError):
-            image_diff.get_image_list('*.gif', 'source', echo=False)
+            image_diff.get_image_list('*.gif', 'source')
 
     def test_make_diff_dir_no_dir(self):
         was_no_dir = True
@@ -66,6 +66,16 @@ class TestImageDiff(unittest.TestCase):
 
         if was_no_dir:
             os.rmdir("diff")
+
+    def test_delete_logs(self):
+        logfiles = ["one.log", "two.log", "three.log"]
+        for name in logfiles:
+            with open(name, 'w') as f:
+                f.write(name)
+
+        image_diff.delete_logs(True, echo=False)
+        for name in self.files:
+            self.assertFalse(os.path.exists(name))
 
     def tearDown(self) -> None:
         pass
