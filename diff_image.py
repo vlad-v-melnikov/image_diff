@@ -56,7 +56,7 @@ def get_image_list(file_pattern, purpose):
     images = glob(file_pattern)
     assert len(images) > 0, f"Could not find the {purpose} files. Use -h argument for help on how to " \
                                    f"point the script to {purpose} files. Exiting."
-    images = images.sort()
+    images.sort()
     return images
 
 
