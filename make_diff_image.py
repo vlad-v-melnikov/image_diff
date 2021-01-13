@@ -49,7 +49,7 @@ def main():
             identifier = os.path.basename(source)
             print(f'{target} DOES NOT match {source}')
             logging.warning(f'{target} DOES NOT match {source}')
-            diff.save('diff/diff_' + identifier + '.gif')
+            diff.save('diff/diff_' + identifier)
 
 
 def get_image_list(file_pattern, purpose):
