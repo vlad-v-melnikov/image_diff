@@ -7,22 +7,25 @@ from PIL import Image, ImageChops, UnidentifiedImageError
 
 
 def main():
+    source_file_pattern, test_file_pattern, exclusion, log_deletion = parse_arguments()
+
+    delete_logs(log_deletion)
     make_diff_dir()
     clean_diffs()
 
     now = datetime.now()
     log_time = now.strftime("%Y%m%d%H%M%S")
-    logging.basicConfig(filename=f'image_diff_{log_time}.log',
+    logging.basicConfig(filename=f'log_image_diff_{log_time}.log',
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         level=logging.INFO)
 
-    source_file_pattern, test_file_pattern, exclusion = parse_arguments()
-
     try:
         source_images = glob(source_file_pattern)
-        assert len(source_images) > 0, "Could not find the source files. Exiting."
+        assert len(source_images) > 0, "Could not find the source files. Use -h argument for help on how to " \
+                                       "point the script to source files. Exiting."
         test_images = glob(test_file_pattern)
-        assert len(test_images) > 0, "Could not find the target files. Exiting."
+        assert len(test_images) > 0, "Could not find the target files. Use -h argument for help on how to point " \
+                                     "the script to target files. Exiting."
     except AssertionError as e:
         print(e)
         logging.error(e)
@@ -70,6 +73,16 @@ def exclude_images(images, exclusion):
     return images
 
 
+def delete_logs(log_deletion, echo=True):
+    if not log_deletion:
+        return
+    files = glob("./*.log")
+    for f in files:
+        os.unlink(f)
+    if len(files) and echo > 0:
+        print(f"Deleted {len(files)} log file(s).")
+
+
 def make_diff_dir(echo=True):
     if not os.path.exists("./diff"):
         os.makedirs("./diff")
@@ -99,13 +112,15 @@ def parse_arguments():
     parser.add_argument('-x', '--exclude', help="A string for what these files names SHOULD NOT contain. "
                                                 "No wildcards here. For example, _nc.gif means that files like "
                                                 "one_nc.gif will be ignored.")
+    parser.add_argument('-l', '--logdelete', help="Use this argument to delete previously generated log files.",
+                        action="store_true")
 
     args = parser.parse_args()
     source_file_pattern = args.source if args.source else ".\\source\\*.*"
     target_file_pattern = args.target if args.target else ".\\target\\*.*"
     exclusion = args.exclude if args.exclude else ''
 
-    return source_file_pattern, target_file_pattern, exclusion
+    return source_file_pattern, target_file_pattern, exclusion, args.logdelete
 
 
 if __name__ == "__main__":
