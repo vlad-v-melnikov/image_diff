@@ -68,7 +68,7 @@ class TestImageDiff(unittest.TestCase):
             os.rmdir("diff")
 
     def test_delete_logs(self):
-        logfiles = ["one.log", "two.log", "three.log"]
+        logfiles = ["log_image_diff_one.log", "log_image_diff_two.log", "log_image_diff_three.log"]
         for name in logfiles:
             with open(name, 'w') as f:
                 f.write(name)

@@ -67,7 +67,7 @@ def exclude_images(images, exclusion):
 def delete_logs(log_deletion, echo=True):
     if not log_deletion:
         return
-    files = glob("./*.log")
+    files = glob("./log_image_diff_*.log")
     for f in files:
         os.unlink(f)
     if len(files) and echo > 0:
