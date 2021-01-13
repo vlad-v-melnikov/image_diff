@@ -1,6 +1,6 @@
 import unittest
 import os
-import image_diff
+import diff_image
 
 
 class TestImageDiff(unittest.TestCase):
@@ -11,13 +11,13 @@ class TestImageDiff(unittest.TestCase):
     def test_exclude_images_with_exclusion(self):
         original = self.files
         exclude = 'nc.gif'
-        result = image_diff.exclude_images(original, exclude)
+        result = diff_image.exclude_images(original, exclude)
         self.assertListEqual(result, ['one.gif', 'two.gif'])
 
     def test_exclude_images_no_exclusion(self):
         original = ['one.gif', 'two.gif', 'three.gif']
         exclude = 'nc.gif'
-        result = image_diff.exclude_images(original, exclude)
+        result = diff_image.exclude_images(original, exclude)
         self.assertListEqual(result, original)
 
     def test_get_image_list(self):
@@ -25,7 +25,7 @@ class TestImageDiff(unittest.TestCase):
             with open(name, 'w') as f:
                 f.write(f"name")
 
-        result = image_diff.get_image_list('*.gif', 'source')
+        result = diff_image.get_image_list('*.gif', 'source')
 
         self.assertListEqual(self.files, result)
         for name in self.files:
@@ -37,14 +37,14 @@ class TestImageDiff(unittest.TestCase):
             if os.path.exists(name):
                 os.unlink(name)
         with self.assertRaises(AssertionError):
-            image_diff.get_image_list('*.gif', 'source')
+            diff_image.get_image_list('*.gif', 'source')
 
     def test_make_diff_dir_no_dir(self):
         was_no_dir = True
         if os.path.isdir("diff"):
             was_no_dir = False
             os.rmdir("diff")
-        image_diff.make_diff_dir(echo=False)
+        diff_image.make_diff_dir(echo=False)
 
         self.assertTrue(os.path.isdir("diff"))
 
@@ -60,7 +60,7 @@ class TestImageDiff(unittest.TestCase):
             with open(f"diff/{name}", 'w') as f:
                 f.write(f"{name}")
 
-        image_diff.clean_diffs(echo=False)
+        diff_image.clean_diffs(echo=False)
         for name in self.files:
             self.assertFalse(os.path.exists(f"diffs/{name}"))
 
@@ -73,7 +73,7 @@ class TestImageDiff(unittest.TestCase):
             with open(name, 'w') as f:
                 f.write(name)
 
-        image_diff.delete_logs(True, echo=False)
+        diff_image.delete_logs(True, echo=False)
         for name in self.files:
             self.assertFalse(os.path.exists(name))
 
