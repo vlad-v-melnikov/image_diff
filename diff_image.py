@@ -107,8 +107,8 @@ def parse_arguments():
                         action="store_true")
 
     args = parser.parse_args()
-    source_file_pattern = args.source if args.source else ".\\source\\*.*"
-    target_file_pattern = args.target if args.target else ".\\target\\*.*"
+    source_file_pattern = args.source if args.source else "./source/*.*"
+    target_file_pattern = args.target if args.target else "./target/*.*"
     exclusion = args.exclude if args.exclude else ''
 
     return source_file_pattern, target_file_pattern, exclusion, args.logdelete
