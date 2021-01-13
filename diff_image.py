@@ -20,8 +20,8 @@ def main():
                         level=logging.INFO)
 
     try:
-        source_images = get_image_list(source_file_pattern, 'source')
-        test_images = get_image_list(test_file_pattern, 'target')
+        source_images = get_image_list(source_file_pattern, 'source').sort()
+        test_images = get_image_list(test_file_pattern, 'target').sort()
     except AssertionError as e:
         print(e)
         logging.error(e)
