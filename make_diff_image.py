@@ -48,7 +48,10 @@ def main():
 
         diff = ImageChops.difference(image_source, image_test)
         if bool(diff.getbbox()):
-            identifier = os.path.basename(source)
+            if os.path.basename(source) == os.path.basename(target):
+                identifier = os.path.basename(source)
+            else:
+                identifier = os.path.basename(source)[:-4] + "_vs_" + os.path.basename(target)
             print(f'{target} DOES NOT match {source}')
             logging.warning(f'{target} DOES NOT match {source}')
             diff.save('diff/diff_' + identifier)
