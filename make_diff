@@ -3,5 +3,5 @@
 # Put this file into a $PATH folder to launch from anywhere with minimum command line typing.
 
 echo ""
-python3 /export/cdbsrv/rpotter/NAWIPS_Automation/image_diff/make_diff_image.py "{$1}" "{$2}" -x "{$3}"
+python3 /export/cdbsrv/rpotter/NAWIPS_Automation/image_diff/make_diff_image.py {$1} {$2} -x {$3}
 echo ""
