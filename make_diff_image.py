@@ -7,12 +7,11 @@ from PIL import Image, ImageChops, UnidentifiedImageError
 
 
 def main():
-    source_file_pattern, test_file_pattern, exclusion, log_deletion = parse_arguments()
+    source_file_pattern, test_file_pattern, exclusion = parse_arguments()
 
-    delete_logs(log_deletion)
     make_dir('diff')
     make_dir('logs')
-    # clean_diffs()
+    #clean_diffs()
 
     now = datetime.now()
     log_time = now.strftime("%Y%m%d%H%M%S")
@@ -70,16 +69,6 @@ def exclude_images(images, exclusion):
     return images
 
 
-def delete_logs(log_deletion, echo=True):
-    if not log_deletion:
-        return
-    files = glob("./logs/log_image_diff_*.log")
-    for f in files:
-        os.unlink(f)
-    if len(files) and echo > 0:
-        print(f"Deleted {len(files)} log file(s).")
-
-
 def make_dir(folder, echo=True):
     if not os.path.exists(f"./{folder}"):
         os.makedirs(f"./{folder}")
@@ -115,13 +104,11 @@ def parse_arguments():
     parser.add_argument('-x', '--exclude', help="A string for what these files names SHOULD NOT contain. "
                                                 "No wildcards here. For example, _nc.gif means that files like "
                                                 "one_nc.gif will be ignored.")
-    parser.add_argument('-l', '--logdelete', help="Use this argument to delete previously generated log files.",
-                        action="store_true")
 
     args = parser.parse_args()
     exclusion = args.exclude if args.exclude else ''
 
-    return args.source, args.target, exclusion, args.logdelete
+    return args.source, args.target, exclusion
 
 
 if __name__ == "__main__":
