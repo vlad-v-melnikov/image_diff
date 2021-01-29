@@ -1,0 +1,5 @@
+#!/bin/csh
+
+rm -f *.gif *.log *.lis *.nts output* *.grd *.ig *.grb *.vgf *.plt
+rm -rf diff logs
+echo "Purge complete"

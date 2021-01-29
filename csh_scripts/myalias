@@ -1,0 +1,8 @@
+#!/bin/csh
+
+alias imgdif  "image_diff '*_v790.gif' '*_v791.gif'"
+alias lsgif "ls -la | grep '\.gif'"
+alias cgif "ls -la | grep '\.gif' | wc -l"
+
+echo "My aliases set"
+echo ""

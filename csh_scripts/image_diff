@@ -1,0 +1,8 @@
+#! /bin/csh
+
+echo ""
+# echo "Source: " "$1"
+# echo "Target: " "$2"
+# echo "Excluded: " "$3"
+python3 /export/cdbsrv/vmelnikov/NAWIPS/automation/image_diff/make_diff_image.py "$1" "$2" -x "$3"
+echo ""
