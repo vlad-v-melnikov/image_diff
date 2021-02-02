@@ -11,7 +11,6 @@ def main():
 
     make_dir('diff')
     make_dir('logs')
-    #clean_diffs()
 
     now = datetime.now()
     log_time = now.strftime("%Y%m%d%H%M%S")
