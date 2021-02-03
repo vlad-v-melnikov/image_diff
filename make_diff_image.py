@@ -34,6 +34,15 @@ def main():
     logging.info(f'{len(source_images)} benchmark image(s), {len(test_images)} target image(s).')
     print()
 
+    try:
+        assert len(source_images) == len(test_images), f"Number of source images DOES NOT MATCH number of test target" \
+                                                       f" images. Exiting."
+    except AssertionError as e:
+        print(e)
+        logging.error(e)
+        return
+
+
     screens = zip(source_images, test_images)
     for source, target in screens:
         try:
