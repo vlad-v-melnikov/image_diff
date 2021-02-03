@@ -42,7 +42,6 @@ def main():
         logging.error(e)
         return
 
-
     screens = zip(source_images, test_images)
     for source, target in screens:
         try:
